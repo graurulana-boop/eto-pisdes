@@ -1,0 +1,219 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/index.html b/index.html
+index d9247d582bfc03a5dfe7a7e2e2c06cb58e7305d2..5aa7e00172bf826219b12081e35969ac1aad4e4d 100644
+--- a/index.html
++++ b/index.html
+@@ -1,67 +1,170 @@
+ <!doctype html>
+-<html lang="ru">
++<html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-    <title>Happy Birthday My Baby</title>
++    <title>A Special Gift For You 🎁</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link
+-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Pacifico&display=swap"
++      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap"
+       rel="stylesheet"
+     />
+     <link rel="stylesheet" href="style.css" />
+   </head>
+   <body>
+-    <div id="falling-layer" aria-hidden="true"></div>
++    <div id="rain-layer" aria-hidden="true"></div>
++
++    <div class="language-switch">EN/VI</div>
+ 
+     <main class="app">
+-      <section class="countdown-wrap" id="countdown-wrap">
+-        <p class="small-title">Твоя праздничная открытка готова ✨</p>
+-        <div class="countdown" id="countdown">1</div>
++      <img
++        class="main-gif"
++        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExc2N2MXI5ZnV2d2VjcnVyZjN5N3M4NGw4dGU2dHFvZW9zOHc5cjRoaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oriO0OEd9QIDdllqo/giphy.gif"
++        alt="Happy birthday"
++      />
++
++      <div class="top-actions">
++        <button id="music-toggle" class="icon-btn" aria-label="Play or pause music">▶</button>
++        <button id="settings-open" class="icon-btn" aria-label="Open settings">⚙</button>
++      </div>
++
++      <p class="hint">tap here to open settings as you like</p>
++
++      <h1 id="main-text">HAPPY | BIRTHDAY | TO | YOU</h1>
++
++      <audio id="bg-audio" preload="auto" loop>
++        <source
++          src="https://cdn.pixabay.com/download/audio/2021/10/30/audio_99ea167fac.mp3?filename=happy-birthday-to-you-piano-version-13976.mp3"
++          type="audio/mpeg"
++        />
++      </audio>
++    </main>
++
++    <aside id="settings-panel" class="settings-panel hidden" aria-hidden="true">
++      <div class="panel-header">
++        <h2>⚙️ Website Settings</h2>
++        <button id="settings-close" class="close-btn" aria-label="Close settings">×</button>
++      </div>
++
++      <div class="section auth-row">
++        <button class="ghost-btn">Sign in with Google</button>
++        <button class="ghost-btn">Sign out</button>
++        <button class="ghost-btn">Order history</button>
++      </div>
++
++      <section class="section">
++        <h3>🔊 Audio Settings</h3>
++        <label>Background Music:</label>
++        <div class="input-row">
++          <select id="music-select">
++            <option>Loading music list...</option>
++            <option value="piano">Happy Birthday Piano</option>
++            <option value="kids">Happy Birthday For Kids</option>
++          </select>
++          <button id="preview-btn" class="mini-btn">▶ Preview</button>
++        </div>
++        <p class="helper">Select a song and press "Preview".</p>
++
++        <div class="upload-block">
++          <label for="upload-audio" class="upload-label">Choose upload file</label>
++          <input id="upload-audio" type="file" accept="audio/*" />
++          <button class="mini-btn">Choose and upload file</button>
++        </div>
++
++        <button class="back-link">← Choose system music</button>
+       </section>
+ 
+-      <section class="card hidden" id="card">
+-        <h1>Happy Birthday My Baby</h1>
+-        <p class="subtitle">This day is yours, you deserve better</p>
++      <section class="section">
++        <h3>⏰ Time Settings</h3>
++        <label>Countdown Time:</label>
++        <div class="chip-row">
++          <button class="chip active" data-seconds="3">3 seconds</button>
++          <button class="chip" data-seconds="5">5 seconds</button>
++          <button class="chip" data-seconds="10">10 seconds</button>
++        </div>
++      </section>
+ 
+-        <div class="divider"></div>
++      <section class="section">
++        <h3>🌧️ Rain Text Effect Settings</h3>
++        <label for="rain-words">Main rain words:</label>
++        <input id="rain-words" type="text" value="HAPPY|BIRTHDAY|LOVE" />
+ 
+-        <p class="ru-text">
+-          С днём рождения, моя радость! Пусть твоя улыбка сияет ярче звёзд,
+-          мечты исполняются легко, а сердце всегда чувствует любовь и тепло.
+-        </p>
++        <label>Choose color:</label>
++        <div class="color-presets">
++          <button class="preset active" data-color="#ff4fcf">Sweet Pink</button>
++          <button class="preset" data-color="#32b9ff">Cool Blue</button>
++          <button class="preset" data-color="#a67dff">Dreamy Purple</button>
++          <button class="preset">Custom color</button>
++        </div>
+ 
+-        <div class="gallery">
+-          <img
+-            src="https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=900&q=80"
+-            alt="Праздничный торт"
+-          />
+-          <img
+-            src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=900&q=80"
+-            alt="Воздушные шары"
+-          />
+-          <img
+-            src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=80"
+-            alt="Праздничные огни"
+-          />
++        <label>Rain text color 1:</label>
++        <input id="rain-color-1" type="color" value="#ff4fcf" />
++        <label>Rain text color 2:</label>
++        <input id="rain-color-2" type="color" value="#a67dff" />
++      </section>
++
++      <section class="section">
++        <h3>✨ Main Text Settings</h3>
++        <label for="main-text-content"
++          >Main text content (use | to split words, avoid very long lines):</label
++        >
++        <input id="main-text-content" type="text" value="HAPPY|BIRTHDAY|TO|YOU" />
++
++        <label for="main-text-color">Main text color:</label>
++        <input id="main-text-color" type="color" value="#ffffff" />
++      </section>
++
++      <section class="section">
++        <h3>🖼️ Animation Settings</h3>
++        <label>Animation (optional):</label>
++        <select>
++          <option>None</option>
++          <option>Confetti</option>
++          <option>Floating Balloons</option>
++        </select>
++
++        <div class="toggle-row">
++          <span>Show book:</span>
++          <button class="toggle on">On</button>
++          <button class="toggle">Off</button>
++        </div>
++      </section>
++
++      <section class="section">
++        <h3>📖 Book Page Settings</h3>
++        <div class="toggle-row">
++          <span>Show heart effect:</span>
++          <button class="toggle on">On</button>
++          <button class="toggle">Off</button>
+         </div>
+ 
+-        <ul class="phrases">
+-          <li>💖 Ты делаешь этот мир добрее и красивее.</li>
+-          <li>🌸 Пусть каждый новый день дарит счастье.</li>
+-          <li>🎁 Сегодня всё лучшее — только для тебя.</li>
+-        </ul>
++        <label class="checkbox-row">
++          <input type="checkbox" />
++          Save QR forever: (Add 20.000đ)
++        </label>
++
++        <p class="expire">⏳ Expiration is 30 days</p>
++
++        <p class="notice">
++          Please <a href="https://www.tiktok.com" target="_blank" rel="noreferrer">follow me</a>
++          to get the newest websites as fast as possible!
++        </p>
++
++        <p class="warning">
++          ⚠️ If you are not in Vietnam, payment on this website may not work. Message
++          <a href="https://www.tiktok.com" target="_blank" rel="noreferrer">@iamtritoan</a> on TikTok for support.
++        </p>
++
++        <button class="apply-btn">Apply Settings</button>
+       </section>
+-    </main>
+ 
+-    <audio id="birthday-audio" preload="auto" loop>
+-      <source
+-        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_70447857c5.mp3?filename=happy-birthday-song-for-kids-112166.mp3"
+-        type="audio/mpeg"
+-      />
+-    </audio>
++      <p class="creator">
++        Website created by TikTok:
++        <a href="https://www.tiktok.com" target="_blank" rel="noreferrer">iamtritoan</a>
++      </p>
++    </aside>
+ 
+     <script src="script.js"></script>
+   </body>
+ </html>
+ 
+EOF
+)
